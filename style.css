@@ -1,0 +1,15 @@
+/*body{
+	text-align: center;
+}*/
+
+div.calendar-box{
+	width: 620px;
+	height:720px;
+	padding:10px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+div.white-space{
+	height: 100px;
+}
