@@ -2,12 +2,39 @@
 	text-align: center;
 }*/
 
+div.event{
+	position: absolute;
+}
+
+div.border{
+	border-width: 1px;
+	border-style: solid;
+}
+
 div.calendar-box{
 	width: 620px;
 	height:720px;
-	padding:10px;
-	border-width: 1px;
-	border-style: solid;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+div.event1{
+	margin-top: 60px;
+	height: 60px;
+	width: 300px;
+}
+
+div.event2{
+	margin-top: 100px;
+	margin-left: 300px;
+	height: 140px;
+	width: 300px;
+}
+
+div.event3{
+	margin-top: 700px;
+	height: 20px;
+	width: 600px;
 }
 
 div.white-space{
