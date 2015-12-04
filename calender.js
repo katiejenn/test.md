@@ -32,6 +32,7 @@ events_map = new Map();
 
 /* PART ONE: function that returns the top and left CSS positions for each event */
 function findPosition(events){
+	var previousKey;
 	for(var key in events){
 		//position from the top of the calendar div is based on the start time. one minute equals one pixel.
 		events[key]['top'] = events[key]['start'];
@@ -46,7 +47,21 @@ function findPosition(events){
 		events[key]['left'] = events[key]['width'] * positionInOverlap;
 
 		//we will need to update prior events for cascading events
+		if(events[previousKey] && events[previousKey]['left'] != 0){
+			console.log(events[previousKey]['overlappingEvents']);
+			overlappingEvents = events[previousKey]['overlappingEvents'];
 
+			newWidth = 600/(overlappingEvents.length + 1);
+			for(i=0; i<overlappingEvents.length; i++){
+				currentKey = overlappingEvents[i];
+				events[currentKey]['width'] = newWidth;
+				events[currentKey]['left'] = newWidth * i;
+			}
+			events[key]['width'] = newWidth;
+			events[key]['left'] = newWidth * (overlappingEvents.length);
+		}
+
+		previousKey = key;
 	}
 }
 
@@ -59,7 +74,7 @@ function grabEvents(){
 		}
 	}).done(function(){
 		inputTimes(events_map);
-		console.log(day);
+		//console.log(day);
 		findPosition(events_map);
 		console.log(events_map);
 		renderEvents(events_map);
@@ -102,7 +117,7 @@ function booked(key, start, end){
 		if(day[i].length > val[0]){
 			val[0] = day[i].length;
 			val[1] = day[i].indexOf(key);
-			events[key]['overlappingEvents'] = day[i];
+			events_map[key]['overlappingEvents'] = day[i];
 		}
 	}
 
