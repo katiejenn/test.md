@@ -1,10 +1,6 @@
-// $(function(){
-// 	// grabEvents();
-// 	inputTimes(events_map);
-// 	findPosition(events_map);
-// 	console.log(events_map)
-// 	renderEvents(events_map);
-// });
+$(function(){
+	grabEvents();
+});
 
 
 /* Variables */
@@ -19,14 +15,16 @@ for(var i=0; i<=780; i++){
 events_map = new Map();
 
 /* hardcoded event data for testing purposes */
-events_map = {
-    event1: {start: 30, end: 120},  
-    event2: {start: 100, end: 140},
-    event3: {start: 130, end: 360},
-    event4: {start: 300, end: 400},
-    event5: {start: 450, end: 600},
-    event6: {start: 700, end: 720}
-}
+// events_map = {
+// 	// an event from 10am to 11am
+//     event1: {start: 60, end: 120},  
+//     // an event from 10:40am to 1pm 
+//     event2: {start: 100, end: 240},
+//     // an event from 12:40pm to 3pm
+//     event3: {start: 130, end: 360},
+//     // an event from 8:40pm to 9pm 
+//     event4: {start: 700, end: 720}  
+// }
 
 /* PART ONE: function that returns the top and left CSS positions for each event. I also added in the attributes width and overlappingEvents. */
 function findPosition(events){
@@ -43,11 +41,19 @@ function findPosition(events){
 
 		//position from the left is dependent on how many events overlap at that time
 		events[key]['left'] = events[key]['width'] * positionInOverlap;
-		// console.log(key, "'s left value is", events[key]['left']);
 
 		//we will need to update prior events for cascading events
-		if(previousKey){
-			checkForCascading(previousKey, key);
+		if((numEventsOverlapping > 1) && events[previousKey] && events[previousKey]['left'] != 0){
+			overlappingEvents = events[previousKey]['overlappingEvents'];
+
+			newWidth = 600/(overlappingEvents.length + 1);
+			for(i=0; i<overlappingEvents.length; i++){
+				currentKey = overlappingEvents[i];
+				events[currentKey]['width'] = newWidth;
+				events[currentKey]['left'] = newWidth * i;
+			}
+			events[key]['width'] = newWidth;
+			events[key]['left'] = newWidth * (overlappingEvents.length);
 		}
 
 		previousKey = key;
@@ -74,7 +80,6 @@ function renderEvents(events){
 		//grab the style elements of each event
 		margin_top = events[key]['start'];
 		margin_left = events[key]['left'];
-		// console.log(key, "'s margin-left value:", margin_left);
 		height = events[key]['end'] - events[key]['start'];
 		width = events[key]['width'];
 	
@@ -119,61 +124,5 @@ function markTime(key, start, end){
 		day[i].push(key);
 	}
 }
-
-//recursive that keeps cascading up to the beginning of a chain of cascading events
-function checkForCascading(previousKey, key){
-	// var previousKey;
-	// var currentKey;
-
-	var reverseKeys = [];
-
-	for(var key in events_map){
-		reverseKeys.unshift(key);
-	}
-
-	console.log(reverseKeys);
-	
-	var startingIndex = reverseKeys.indexOf(key);
-	console.log('current key:', key);
-	console.log('starting index:', startingIndex);
-	
-	// for(var i=startingIndex; i< reverseKeys.length; i++){
-	// 	if((numEventsOverlapping > 1) && events_map[previousKey] && events_map[previousKey]['left'] != 0){
-	// 		// console.log(key);
-	// 		overlappingEvents = events_map[previousKey]['overlappingEvents'];
-
-	// 		newWidth = 600/(overlappingEvents.length + 1);
-	// 		for(i=0; i<overlappingEvents.length; i++){
-	// 			currentKey = overlappingEvents[i];
-	// 			events_map[currentKey]['width'] = newWidth;
-	// 			events_map[currentKey]['left'] = newWidth * i;
-	// 		}
-	// 		events_map[key]['width'] = newWidth;
-	// 		events_map[key]['left'] = newWidth * (overlappingEvents.length);
-
-	// 		if((i+1) <= reverseKeys.length){
-	// 			checkForCascading(reverseKeys[i+1], reverseKeys[i]);
-	// 		}
-	// 	}
-	// }
-	return 'complete';
-
-}
-
-
-inputTimes(events_map);
-findPosition(events_map);
-// console.log(events_map)
-renderEvents(events_map);
-
-// console.log(events_map);
-// reverseKeys = [];
-
-// for(var key in events_map){
-// 	reverseKeys.unshift(key);
-// }
-
-// console.log(reverseKeys);
-
 
 
