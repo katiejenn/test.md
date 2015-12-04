@@ -1,15 +1,11 @@
 $(function(){
 	grabEvents();
-	// console.log(events_map);
-	// inputTimes(events);
-	// findPosition(events);
-	// renderEvents(events);
 });
 
 
 /* Variables */
 
-/* Map that represents minute by minute schedule of the day. Each key represents a minute of that day and each value represents how many events are booked for that minute. */
+/* A schedule of the day. Each key represents a minute of the day and each value is an array of events that are booked for that minute */
 day = new Map();
 
 for(var i=0; i<=780; i++){
@@ -30,7 +26,7 @@ events_map = new Map();
 //     event4: {start: 700, end: 720}  
 // }
 
-/* PART ONE: function that returns the top and left CSS positions for each event */
+/* PART ONE: function that returns the top and left CSS positions for each event. I also added in the attributes width and overlappingEvents. */
 function findPosition(events){
 	var previousKey;
 	for(var key in events){
@@ -74,9 +70,7 @@ function grabEvents(){
 		}
 	}).done(function(){
 		inputTimes(events_map);
-		//console.log(day);
 		findPosition(events_map);
-		console.log(events_map);
 		renderEvents(events_map);
 	});
 }
@@ -90,13 +84,7 @@ function renderEvents(events){
 		margin_left = events[key]['left'];
 		height = events[key]['end'] - events[key]['start'];
 		width = events[key]['width'];
-		
-		// console.log(key);
-		// console.log("margin-top:", margin_top);
-		// console.log("margin-left:", margin_left);
-		// console.log("height:", height);
-		// console.log("width:", width);
-
+	
 		//append the new div on the calendar
 		div = "<div class='event border " + key + "'><span class=event-title>" + key + "</span></div>";
 		selector = "div." + key;
@@ -139,9 +127,5 @@ function markTime(key, start, end){
 	}
 }
 
-// inputTimes(events);
-// findPosition(events);
-// console.log(events);
-// renderEvents(events);
 
 
