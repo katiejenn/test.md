@@ -43,7 +43,7 @@ function findPosition(events){
 		events[key]['left'] = events[key]['width'] * positionInOverlap;
 
 		//we will need to update prior events for cascading events
-		if(events[previousKey] && events[previousKey]['left'] != 0){
+		if((numEventsOverlapping > 1) && events[previousKey] && events[previousKey]['left'] != 0){
 			console.log(events[previousKey]['overlappingEvents']);
 			overlappingEvents = events[previousKey]['overlappingEvents'];
 
