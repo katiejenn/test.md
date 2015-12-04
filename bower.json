@@ -1,0 +1,17 @@
+{
+  "name": "coding_challenge",
+  "version": "0.0.0",
+  "homepage": "https://github.com/katiejenn/test.md",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.1.4"
+  }
+}

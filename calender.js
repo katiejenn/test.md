@@ -1,3 +1,8 @@
+// $(function(){
+// 	renderEvents(findPosition(grabEvents()));
+// });
+
+
 /* Variables */
 
 /* Map that represents minute by minute schedule of the day. Each key represents a minute of that day and each value represents how many events are booked for that minute. */
@@ -53,9 +58,32 @@ function findPosition(events){
 }
 
 /* PART TWO - get request from API endpoint */
-// $.get("https://appcues-interviews.firebaseio.com/calendar/events.json", function(res){
-// 		console.log(res);
-// 	});
+function grabEvents(){
+	$.get("https://appcues-interviews.firebaseio.com/calendar/events.json", function(res){
+		return res;
+	});
+}
+
+/*PART THREE - render events */
+function renderEvents(events){
+	//create the div with the css styling for each event
+	for(var key in events){
+		// var start = events[key]['start'];
+		// var left = events[key]['left'];
+		// var height = 
+		css = {
+			'margin-top': events[key]['start'],
+			'margin-left': events[key]['left'],
+			'height': events[key]['end'] - events[key]['start'],
+			'width': 300
+		}
+		console.log(key);
+		console.log(css);
+	}
+	
+
+	//append the new div on the calendar
+}
 
 
 /* helper methods */
@@ -77,7 +105,7 @@ function markTime(start, end){
 	}
 }
 
-findPosition(events);
-console.log(events);
-
+// findPosition(events);
+// console.log(events);
+renderEvents(events);
 
